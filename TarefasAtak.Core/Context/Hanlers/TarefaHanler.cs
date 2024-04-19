@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using TarefasAtak.Core.Context.Commands;
 using TarefasAtak.Core.Context.Commands.Interfaces;
 using TarefasAtak.Core.Context.Entities;
-using TarefasAtak.Core.Context.Hanlers.Interfaces;
 using TarefasAtak.Core.Context.Repositories.Interfaces;
+using TarefasAtak.Core.SharedContext.Hanlers;
 
 namespace TarefasAtak.Core.Context.Hanlers
 {
