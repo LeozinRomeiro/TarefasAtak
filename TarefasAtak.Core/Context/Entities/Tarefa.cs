@@ -16,8 +16,8 @@ namespace TarefasAtak.Core.Context.Entities
             Status = status;
         }
 
-        public string Titulo { get; set; }
-        public string Descricao { get; set; }
-        public Status Status { get; set; }
+        public string Titulo { get; private set; }
+        public string Descricao { get; private set; }
+        public Status Status { get; private set; }
     }
 }
