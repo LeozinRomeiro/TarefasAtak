@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
+using TarefasAtak.Core.Context.Commands.Interfaces;
 
 namespace TarefasAtak.Core.Context.Hanlers.Interfaces
 {
