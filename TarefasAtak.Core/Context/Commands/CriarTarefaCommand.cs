@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using TarefasAtak.Core.Context.Commands.Interfaces;
 using TarefasAtak.Core.Context.Enums;
+using TarefasAtak.Core.Context.ValueObjetcs;
 
 namespace TarefasAtak.Core.Context.Commands
 {
     public class CriarTarefaCommand : ICommand
     {
-        public CriarTarefaCommand(string titulo, string descricao, Status status)
+        public CriarTarefaCommand(string titulo, Descricao descricao, Status status)
         {
             Titulo = titulo;
             Descricao = descricao;
@@ -18,7 +19,7 @@ namespace TarefasAtak.Core.Context.Commands
         }
 
         public string Titulo { get; set; }
-        public string Descricao { get; set; }
+        public Descricao Descricao { get; set; }
         public Status Status { get; set; }
     }
 }
