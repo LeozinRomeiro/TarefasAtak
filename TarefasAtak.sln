@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TarefasAtak.Core", "Tarefas
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TarefasAtak.Test", "TarefasAtak.Test\TarefasAtak.Test.csproj", "{840D0648-7CD0-4E3E-AF5C-825CD76D3503}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TarefasAtak.Infra", "TarefasAtak.Infra\TarefasAtak.Infra.csproj", "{A247A658-C1E6-44DD-90E5-0768E0379348}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{840D0648-7CD0-4E3E-AF5C-825CD76D3503}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{840D0648-7CD0-4E3E-AF5C-825CD76D3503}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{840D0648-7CD0-4E3E-AF5C-825CD76D3503}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A247A658-C1E6-44DD-90E5-0768E0379348}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A247A658-C1E6-44DD-90E5-0768E0379348}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A247A658-C1E6-44DD-90E5-0768E0379348}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A247A658-C1E6-44DD-90E5-0768E0379348}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
