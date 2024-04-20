@@ -9,6 +9,6 @@ namespace TarefasAtak.Core.Context.Repositories.Interfaces
 {
     public interface ITarefaRepository
     {
-        public void Save(Tarefa tarefa);
+        public void Save(List<Tarefa> tarefa);
     }
 }

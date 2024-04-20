@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using TarefasAtak.Core.Context.Entities;
 using TarefasAtak.Core.Context.Repositories.Interfaces;
 
-namespace TarefasAtak.Infra.Context
+namespace TarefasAtak.Infra.Context.Repositories
 {
     public class TarefaRepository : ITarefaRepository
     {
@@ -18,16 +18,18 @@ namespace TarefasAtak.Infra.Context
             _nomeArquivo = nome;
         }
 
-        public List<Tarefa> GetAll(){
+        public List<Tarefa> GetAll()
+        {
             if (!File.Exists(_nomeArquivo))
                 return new List<Tarefa>();
             var json = File.ReadAllText(_nomeArquivo);
             return JsonSerializer.Deserialize<List<Tarefa>>(json);
         }
 
-        public void Save(Tarefa tarefa)
+        public void Save(List<Tarefa> tarefa)
         {
-            throw new NotImplementedException();
+            var json = JsonSerializer.Serialize(tarefa);
+            File.WriteAllText(_nomeArquivo, json);
         }
     }
 }
