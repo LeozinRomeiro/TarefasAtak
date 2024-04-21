@@ -14,6 +14,8 @@ namespace TarefasAtak.Api.Extensions
         {
             builder.Services.AddScoped<ITarefaRepository, TarefaRepository>();
             builder.Services.AddScoped<ITarefaServico, TarefaServico>();
+            builder.Services.AddAutoMapper(typeof(StartupBase));
+
         }
         public static void AddConfiguration(this WebApplicationBuilder builder)
         {
@@ -23,6 +25,5 @@ namespace TarefasAtak.Api.Extensions
         {
             builder.Services.AddScoped(x=>new AppDbContext<Tarefa>());
         }
-
     }
 }
