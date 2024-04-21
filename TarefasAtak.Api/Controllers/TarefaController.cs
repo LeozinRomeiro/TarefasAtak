@@ -11,6 +11,8 @@ using TarefasAtak.Infra.Data;
 
 namespace TarefasAtak.Api.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class TarefaController : ControllerBase 
     {
         private readonly ITarefaServico servico;
@@ -22,7 +24,6 @@ namespace TarefasAtak.Api.Controllers
             this.mapper = mapper;
         }
 
-        [Route("[controller]")]
         [HttpGet]
         public async Task<ActionResult> GetAllAsync()
         {
@@ -32,7 +33,6 @@ namespace TarefasAtak.Api.Controllers
 
             return Ok(new CommandResult(true, "Resultado da busca...", tarefasDto));
         }
-        [Route("[controller]")]
         [HttpGet("{id}")]
         public async Task<ActionResult> GetByIdAsync([FromRoute] Guid id)
         {
@@ -43,7 +43,6 @@ namespace TarefasAtak.Api.Controllers
             return Ok(new CommandResult(true, "Resultado da busca...", tarefasDto));
         }
 
-        [Route("[controller]")]
         [HttpPost]
         public async Task<ActionResult> PostAsync([FromBody] TarefaDto tarefaDto)
         {
