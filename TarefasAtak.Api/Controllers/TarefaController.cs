@@ -30,19 +30,27 @@ namespace TarefasAtak.Api.Controllers
             var tarefas = servico.GetAll();
             var tarefasDto = mapper.Map<List <TarefaDto>>(tarefas.ToList());
 
-            //var tarefa = new Tarefa("teste", new Core.Context.ValueObjetcs.Descricao("teste"), Core.Context.Enums.Status.Andamento);
+            return Ok(new CommandResult(true, "Resultado da busca...", tarefasDto));
+        }
+        [Route("[controller]")]
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetByIdAsync([FromRoute] Guid id)
+        {
 
-            //hanler.Add(tarefa);
+            var tarefa = servico.GetById(id);
+            var tarefasDto = mapper.Map<TarefaDto>(tarefa);
 
             return Ok(new CommandResult(true, "Resultado da busca...", tarefasDto));
         }
 
         [Route("[controller]")]
         [HttpPost]
-        public async Task<ActionResult> PostAsync()
+        public async Task<ActionResult> PostAsync([FromBody] TarefaDto tarefaDto)
         {
+            if (tarefaDto is null)
+                return NotFound();
 
-            var tarefa = new Tarefa("teste", new Core.Context.ValueObjetcs.Descricao("teste"), Core.Context.Enums.Status.Andamento);
+            var tarefa = mapper.Map<Tarefa>(tarefaDto);
 
             servico.Add(tarefa);
 
