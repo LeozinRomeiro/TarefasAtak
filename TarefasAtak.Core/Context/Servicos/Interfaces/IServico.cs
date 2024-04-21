@@ -14,7 +14,7 @@ namespace TarefasAtak.Core.Context.Servicos.Interfaces
 
         void Update(T obj);
 
-        void Remove(T obj);
+        void DeleteById(T obj);
 
         IEnumerable<T> GetAll();
 

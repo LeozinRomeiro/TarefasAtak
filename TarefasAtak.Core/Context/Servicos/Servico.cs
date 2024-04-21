@@ -24,13 +24,14 @@ namespace TarefasAtak.Core.Context.Servicos
             _repository.Add(obj);
         }
 
+        public void DeleteById(T obj)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<T> GetAll()
         {
             return _repository.GetAll();
-        }
-        public void Remove(T obj)
-        {
-            throw new NotImplementedException();
         }
 
         public void Update(T obj)

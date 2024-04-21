@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,8 +23,44 @@ namespace TarefasAtak.Infra.Context.Repositories
         public Tarefa GetByID(Guid id)
         {
             var tarefas = _context.GetAll();
-            return tarefas.FirstOrDefault(x => x.Id == id);
+
+            return tarefas.FirstOrDefault(x => x.Id.Equals(id));
         }
 
+        public Tarefa GetByID(List<Tarefa> tarefas,Guid id)
+        {
+            return tarefas.FirstOrDefault(x => x.Id.Equals(id));
+        }
+
+        public void Add(Tarefa tarefa)
+        {
+            tarefa.Id = Guid.NewGuid();
+            _context.Add(tarefa);
+        }
+
+        public List<Tarefa> GetAll()
+        {
+            var entities = _context.GetAll();
+            return entities;
+        }
+
+        //public bool DeleteById(Guid id)
+        //{
+        //    var tarefas = GetAll();
+        //    var tarefa = GetByID(tarefas,id);
+        //    if (tarefas.Remove(tarefa))
+        //    {
+        //        _context.Save(tarefas);
+        //        return true;
+        //    }
+        //    return false;
+        //}
+
+        public bool DeleteById(Guid id)
+        {
+            var tarefas = GetAll();
+            var tarefa = GetByID(tarefas, id);
+            return _context.Delete(tarefas, tarefa);
+        }
     }
 }

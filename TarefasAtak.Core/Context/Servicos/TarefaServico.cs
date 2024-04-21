@@ -27,5 +27,10 @@ namespace TarefasAtak.Core.Context.Servicos
         {
             return _tarefaRepository.GetByID(id);
         }
+
+        public bool DeleteById(Guid id)
+        {
+            return _tarefaRepository.DeleteById(id);
+        }
     }
 }

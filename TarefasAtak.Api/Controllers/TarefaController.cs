@@ -55,5 +55,16 @@ namespace TarefasAtak.Api.Controllers
 
             return Ok(new CommandResult(true, $"A tarefa {tarefa.Titulo} foi registrada com sucesso", tarefa));
         }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteByIdAsync([FromRoute] Guid id)
+        {
+
+            var tarefa = servico.GetById(id);
+            if (servico.DeleteById(tarefa.Id))
+            {
+                return Ok(new CommandResult(true, $"A tarefa {tarefa.Titulo} foi deletada com sucesso", tarefa));
+            }
+            return StatusCode(500,new CommandResult(false, $"Erro na exclusão da tarefa {tarefa.Titulo}", tarefa));
+        }
     }
 }
