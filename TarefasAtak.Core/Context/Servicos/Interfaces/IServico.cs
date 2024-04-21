@@ -18,6 +18,5 @@ namespace TarefasAtak.Core.Context.Servicos.Interfaces
 
         IEnumerable<T> GetAll();
 
-        T GetById(int id);
     }
 }

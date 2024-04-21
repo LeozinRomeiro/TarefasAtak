@@ -10,5 +10,6 @@ namespace TarefasAtak.Core.Context.Servicos.Interfaces
 {
     public interface ITarefaServico : IServico<Tarefa>
     {
+        Tarefa GetById(Guid id);
     }
 }

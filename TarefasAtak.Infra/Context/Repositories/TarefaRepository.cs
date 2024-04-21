@@ -10,34 +10,20 @@ using TarefasAtak.Infra.Data;
 
 namespace TarefasAtak.Infra.Context.Repositories
 {
-    public class TarefaRepository : ITarefaRepository
+    public class TarefaRepository : Repository<Tarefa>,ITarefaRepository
     {
         private readonly AppDbContext<Tarefa> _context;
 
-        public TarefaRepository(AppDbContext<Tarefa> context)
+        public TarefaRepository(AppDbContext<Tarefa> context):base(context)
         {
             _context = context;
         }
 
-        public List<Tarefa> GetAll()
+        public Tarefa GetByID(Guid id)
         {
             var tarefas = _context.GetAll();
-            return tarefas;
+            return tarefas.FirstOrDefault(x => x.Id == id);
         }
 
-        public void Add(Tarefa tarefa)
-        {
-            _context.Add(tarefa);
-        }
-
-        public List<Tarefa> Listar()
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerable<Tarefa> IRepository<Tarefa>.GetAll()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

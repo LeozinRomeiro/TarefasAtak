@@ -9,5 +9,6 @@ namespace TarefasAtak.Core.Context.Repositories.Interfaces
 {
     public interface ITarefaRepository : IRepository<Tarefa>
     {
+        public Tarefa GetByID(Guid id);
     }
 }

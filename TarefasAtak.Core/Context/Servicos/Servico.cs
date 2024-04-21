@@ -28,12 +28,6 @@ namespace TarefasAtak.Core.Context.Servicos
         {
             return _repository.GetAll();
         }
-
-        public T GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Remove(T obj)
         {
             throw new NotImplementedException();

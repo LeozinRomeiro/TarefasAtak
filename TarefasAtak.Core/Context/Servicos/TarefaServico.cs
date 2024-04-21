@@ -23,20 +23,9 @@ namespace TarefasAtak.Core.Context.Servicos
         //    //return new CommandResult(true, $"A tarefa {tarefa.Titulo} foi registrada com sucesso", tarefa);
         //}
 
-        public void Update(Tarefa obj)
+        public Tarefa GetById(Guid id)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(Tarefa obj)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public Tarefa GetById(int id)
-        {
-            throw new NotImplementedException();
+            return _tarefaRepository.GetByID(id);
         }
     }
 }
