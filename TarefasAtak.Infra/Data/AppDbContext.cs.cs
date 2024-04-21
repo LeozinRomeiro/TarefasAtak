@@ -1,11 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using TarefasAtak.Core.Context.Entities;
+using TarefasAtak.Core.Context.Enums;
+using TarefasAtak.Core.Context.ValueObjetcs;
+using TarefasAtak.Core.SharedContext.Entities;
+using TarefasAtak.Infra.Dtos;
 
 namespace TarefasAtak.Infra.Data
 {
@@ -29,7 +37,12 @@ namespace TarefasAtak.Infra.Data
             if (string.IsNullOrEmpty(json) || json== "{}")
                 return new List<T>();
 
-            return JsonSerializer.Deserialize<List<T>>(json);
+            var options = new JsonSerializerOptions
+            {
+                PreferredObjectCreationHandling = JsonObjectCreationHandling.Populate
+            };
+
+            return JsonSerializer.Deserialize<List<T>>(json, options);
         }
 
         public void Add(T entity)
@@ -46,11 +59,15 @@ namespace TarefasAtak.Infra.Data
         //    Save(entities);
         //}
 
-        //public void Delete(/* parâmetros para identificar a entidade a ser excluída */)
-        //{
-        //    var entities = GetAll();
-        //    Save(entities);
-        //}
+        public bool Delete(List<T> entities,T entity)
+        {
+            if (entities.Remove(entity))
+            {
+                Save(entities);
+                return true;
+            }
+            return false;
+        }
 
         private void Save(List<T> entities)
         {

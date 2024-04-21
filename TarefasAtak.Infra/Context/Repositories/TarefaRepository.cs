@@ -44,18 +44,6 @@ namespace TarefasAtak.Infra.Context.Repositories
             return entities;
         }
 
-        //public bool DeleteById(Guid id)
-        //{
-        //    var tarefas = GetAll();
-        //    var tarefa = GetByID(tarefas,id);
-        //    if (tarefas.Remove(tarefa))
-        //    {
-        //        _context.Save(tarefas);
-        //        return true;
-        //    }
-        //    return false;
-        //}
-
         public bool DeleteById(Guid id)
         {
             var tarefas = GetAll();
