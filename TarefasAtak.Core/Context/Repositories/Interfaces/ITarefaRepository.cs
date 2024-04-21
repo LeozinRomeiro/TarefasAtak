@@ -7,8 +7,10 @@ using TarefasAtak.Core.Context.Entities;
 
 namespace TarefasAtak.Core.Context.Repositories.Interfaces
 {
-    public interface ITarefaRepository
+    public interface ITarefaRepository : IRepository<Tarefa>
     {
-        public void Save(List<Tarefa> tarefa);
+        public void Add(Tarefa tarefa);
+
+        public List<Tarefa> Listar();
     }
 }

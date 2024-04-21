@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using TarefasAtak.Core.Context.Enums;
 using TarefasAtak.Core.Context.ValueObjetcs;
+using TarefasAtak.Core.SharedContext.Entities;
 
 namespace TarefasAtak.Core.Context.Entities
 {
-    public class Tarefa
+    public class Tarefa : Entity
     {
         public Tarefa(string titulo, Descricao descricao, Status status)
         {
