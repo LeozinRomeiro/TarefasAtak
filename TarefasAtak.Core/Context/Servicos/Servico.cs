@@ -21,7 +21,7 @@ namespace TarefasAtak.Core.Context.Servicos
 
         public void Add(T obj)
         {
-            throw new NotImplementedException();
+            _repository.Add(obj);
         }
 
         public IEnumerable<T> GetAll()

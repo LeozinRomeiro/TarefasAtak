@@ -9,8 +9,5 @@ namespace TarefasAtak.Core.Context.Repositories.Interfaces
 {
     public interface ITarefaRepository : IRepository<Tarefa>
     {
-        public void Add(Tarefa tarefa);
-
-        public List<Tarefa> Listar();
     }
 }

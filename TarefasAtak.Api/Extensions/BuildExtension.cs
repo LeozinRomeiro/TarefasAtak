@@ -1,4 +1,5 @@
 ﻿using System;
+using TarefasAtak.Api.Mappers;
 using TarefasAtak.Core.Context.Entities;
 using TarefasAtak.Core.Context.Repositories.Interfaces;
 using TarefasAtak.Core.Context.Servicos;
@@ -14,7 +15,7 @@ namespace TarefasAtak.Api.Extensions
         {
             builder.Services.AddScoped<ITarefaRepository, TarefaRepository>();
             builder.Services.AddScoped<ITarefaServico, TarefaServico>();
-            builder.Services.AddAutoMapper(typeof(StartupBase));
+            builder.Services.AddAutoMapper(typeof(DtoToModelMappingTarefa));
 
         }
         public static void AddConfiguration(this WebApplicationBuilder builder)

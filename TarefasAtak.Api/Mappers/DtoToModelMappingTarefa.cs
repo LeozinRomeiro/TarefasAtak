@@ -18,6 +18,18 @@ namespace TarefasAtak.Api.Mappers
                 .ForMember(e => e.Titulo, d => d.MapFrom(x => x.Titulo))
                 .ForMember(e => e.Descricao, d => d.MapFrom(x => x.Descricao))
                 .ForMember(e => e.Status, d => d.MapFrom(x => x.Status));
+
+            CreateMap<Tarefa, TarefaDto>()
+                .ForMember(e=>e.Titulo,d=>d.MapFrom(x=>x.Titulo))
+                .ForMember(e=>e.Status,d=>d.MapFrom(x=>x.Status))
+                .ForMember(e=>e.Descricao,d=>d.MapFrom(x=>x.Descricao));
+
+            CreateMap<List<Tarefa>, List<TarefaDto>>()
+                .ForMember(e=>e.);
+
+            //CreateMap<List<TarefaDto>, IEnumerable<TarefaDto>>();
+            //CreateMap<List<TarefaDto>, List<Tarefa>>();
+            //CreateMap<IEnumerable<Tarefa>, List<TarefaDto>>();
         }
     }
 }
