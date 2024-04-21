@@ -50,5 +50,13 @@ namespace TarefasAtak.Infra.Context.Repositories
             var tarefa = GetByID(tarefas, id);
             return _context.Delete(tarefas, tarefa);
         }
+        public void Update(Guid id, Tarefa tarefa)
+        {
+            var tarefas = GetAll();
+            var _tarefa = tarefas.FirstOrDefault(x=>x.Id.Equals(id));
+            tarefa.Id = id; 
+            if(_tarefa != null)
+                _context.Update(tarefas, _tarefa, tarefa);
+        }
     }
 }

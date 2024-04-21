@@ -52,12 +52,12 @@ namespace TarefasAtak.Infra.Data
             Save(entities);
         }
 
-        //public void Update(T entity)
-        //{
-        //    var entities = GetAll();
-        //    var existingEntity = entities.Find(e => /* lógica para encontrar a entidade a ser atualizada */);
-        //    Save(entities);
-        //}
+        public void Update(List<T> entities, T entity, T entityUpdate)
+        {
+            entities.Remove(entity);
+            entities.Add(entityUpdate);
+            Save(entities);
+        }
 
         public bool Delete(List<T> entities,T entity)
         {

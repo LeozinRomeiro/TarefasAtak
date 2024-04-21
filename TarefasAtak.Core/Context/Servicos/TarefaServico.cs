@@ -32,5 +32,10 @@ namespace TarefasAtak.Core.Context.Servicos
         {
             return _tarefaRepository.DeleteById(id);
         }
+
+        public void Update(Guid id, Tarefa tarefa)
+        {
+            _tarefaRepository.Update(id, tarefa);
+        }
     }
 }

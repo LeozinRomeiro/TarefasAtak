@@ -11,5 +11,6 @@ namespace TarefasAtak.Core.Context.Repositories.Interfaces
     {
         public Tarefa GetByID(Guid id);
         bool DeleteById(Guid id);
+        void Update(Guid id,Tarefa tarefa);
     }
 }

@@ -66,5 +66,20 @@ namespace TarefasAtak.Api.Controllers
             }
             return StatusCode(500,new CommandResult(false, $"Erro na exclusão da tarefa {tarefa.Titulo}", tarefa));
         }
+        [HttpPut("{id}")]
+        public async Task<ActionResult> PutAsync([FromRoute] Guid id, [FromBody] TarefaDto tarefaDto)
+        {
+            try
+            {
+                var tarefa = mapper.Map<Tarefa>(tarefaDto);
+                servico.Update(id, tarefa);
+                return Ok(new CommandResult(true, $"A tarefa {tarefa.Titulo} foi atualizada com sucesso", tarefa));
+            }
+            catch
+            {
+                return StatusCode(500, new CommandResult(false, $"Erro na atualização da tarefa", null));
+                throw;
+            }
+        }
     }
 }
