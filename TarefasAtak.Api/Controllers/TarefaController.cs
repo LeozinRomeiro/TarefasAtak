@@ -53,7 +53,7 @@ namespace TarefasAtak.Api.Controllers
 
             servico.Add(tarefa);
 
-            return Ok(new CommandResult(true, $"A tarefa {tarefa.Titulo} foi registrada com sucesso", tarefa));
+            return Ok(new CommandResult(true, $"A tarefa {tarefa.Titulo} foi registrada com sucesso", null));
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteByIdAsync([FromRoute] Guid id)
@@ -62,9 +62,9 @@ namespace TarefasAtak.Api.Controllers
             var tarefa = servico.GetById(id);
             if (servico.DeleteById(tarefa.Id))
             {
-                return Ok(new CommandResult(true, $"A tarefa {tarefa.Titulo} foi deletada com sucesso", tarefa));
+                return Ok(new CommandResult(true, $"A tarefa {tarefa.Titulo} foi deletada com sucesso", null));
             }
-            return StatusCode(500,new CommandResult(false, $"Erro na exclusão da tarefa {tarefa.Titulo}", tarefa));
+            return StatusCode(500,new CommandResult(false, $"Erro na exclusão da tarefa {tarefa.Titulo}", null));
         }
         [HttpPut("{id}")]
         public async Task<ActionResult> PutAsync([FromRoute] Guid id, [FromBody] TarefaDto tarefaDto)
@@ -73,7 +73,7 @@ namespace TarefasAtak.Api.Controllers
             {
                 var tarefa = mapper.Map<Tarefa>(tarefaDto);
                 servico.Update(id, tarefa);
-                return Ok(new CommandResult(true, $"A tarefa {tarefa.Titulo} foi atualizada com sucesso", tarefa));
+                return Ok(new CommandResult(true, $"A tarefa {tarefa.Titulo} foi atualizada com sucesso", null));
             }
             catch
             {
