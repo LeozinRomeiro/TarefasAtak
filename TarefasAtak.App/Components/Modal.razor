@@ -2,18 +2,28 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Cadastre sua tarefa</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <Form _model="@_model"></Form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send message</button>
-            </div>
+            <EditForm Model="@_model" OnValidSubmit="@OnValidSubmitAsync">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="titulo" class="col-form-label">Titulo</label>
+                        <InputText type="type" class="form-control" name="titulo" @bind-Value="@_model.Titulo" />
+                    </div>
+                    <div class="form-group">
+                        <label for="descricao" class="col-form-label">Descrição</label>
+                        <InputText type="type" class="form-control" name="descricao" @bind-Value="@_model.Descricao" />
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Send message</button>
+                </div>
+            </EditForm>
         </div>
     </div>
 </div>
@@ -21,5 +31,10 @@
 @code {
     [Parameter]
     [EditorRequired]
-    public Tarefa _model { get; set; } = new();
+    public TarefaViewModel _model { get; set; } = new();
+
+    private async Task OnValidSubmitAsync()
+    {
+
+    }
 }

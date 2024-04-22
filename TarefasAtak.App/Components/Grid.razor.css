@@ -22,26 +22,26 @@
     overflow: auto;
 }
 
-    .task-grid table {
-        width: 100%;
-        border-collapse: collapse;
-    }
+.task-grid table {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-    .task-grid th,
-    .task-grid td {
-        border: 1px solid #dee2e6;
-        padding: 8px;
-        text-align: center;
-    }
+.task-grid th,
+.task-grid td {
+    border: 1px solid #dee2e6;
+    padding: 8px;
+    text-align: center;
+}
 
-    .task-grid th {
-        background-color: #343a40; /* Cor de fundo do cabeçalho */
-        color: #ffffff; /* Cor do texto do cabeçalho */
-    }
+.task-grid th {
+    background-color: #343a40; /* Cor de fundo do cabeçalho */
+    color: #ffffff; /* Cor do texto do cabeçalho */
+}
 
-    .task-grid td:last-child {
-        width: 150px; /* Ajuste para a coluna de botões */
-    }
+.task-grid td:last-child {
+    width: 150px; /* Ajuste para a coluna de botões */
+}
 
 .button-container {
     margin-bottom: 20px;

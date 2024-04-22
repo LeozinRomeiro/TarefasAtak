@@ -14,7 +14,7 @@ else
     <div class="container">
         <div class="row button-container">
             <div class="dashboard col">
-                <button type="button" @onclick="@Inserir" class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModal">
+                <button type="button" @onclick="(e => Inserir(true))" class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModal">
                     <div class="button-div">
                         <svg xmlns="http://www.w3.org/2000/svg" id="btnEditar" width="32" height="32" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
@@ -57,7 +57,7 @@ else
                         {
                             <tr @onclick="() => SelectTarefa(tarefa)" style="background-color: @(selectedTarefa == tarefa ? "lightgray" : "")">
                                 <td>@tarefa.Titulo</td>
-                                <td>@tarefa.Descricao.Texto</td>
+                                <td>@tarefa.Descricao</td>
                                 <td>@tarefa.Status</td>
                             </tr>
                         }
@@ -66,19 +66,22 @@ else
             </div>
         </div>
     </div>
-    <Modal _model="@selectedTarefa"></Modal>
+    @if(exibirModal){
+        <Modal _model="@selectedTarefa"></Modal>
+    }
 }
 
 @code {
-    private List<Tarefa> tarefas = new();
-    private Tarefa selectedTarefa = null;
+    private List<TarefaViewModel> tarefas = new();
+    private TarefaViewModel selectedTarefa = new();
+    private bool exibirModal = false;
 
     protected override async Task OnInitializedAsync()
     {
         await GetAsync();
     }
 
-    private void SelectTarefa(Tarefa tarefa)
+    private void SelectTarefa(TarefaViewModel tarefa)
     {
         if (selectedTarefa == tarefa)
             selectedTarefa = null;
@@ -86,9 +89,9 @@ else
             selectedTarefa = tarefa;
     }
 
-    public void Inserir()
+    public void Inserir(bool exibiModal)
     {
-        
+        exibirModal = exibiModal;
     }
 
     private async Task GetAsync()
