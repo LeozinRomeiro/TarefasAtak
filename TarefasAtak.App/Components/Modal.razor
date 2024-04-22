@@ -1,40 +1,69 @@
-﻿<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Cadastre sua tarefa</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <EditForm Model="@_model" OnValidSubmit="@OnValidSubmitAsync">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="titulo" class="col-form-label">Titulo</label>
-                        <InputText type="type" class="form-control" name="titulo" @bind-Value="@_model.Titulo" />
-                    </div>
-                    <div class="form-group">
-                        <label for="descricao" class="col-form-label">Descrição</label>
-                        <InputText type="type" class="form-control" name="descricao" @bind-Value="@_model.Descricao" />
-                    </div>
+﻿@inject HttpClient Http
+@inject TarefaServico TarefaServico
+@inject IJSRuntime JSRuntime
 
+@if (_model is not null)
+{
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cadastre sua tarefa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Send message</button>
-                </div>
-            </EditForm>
+                <EditForm Model="@_model" OnValidSubmit="@OnValidSubmitAsync">
+                    <ValidationSummary></ValidationSummary>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="titulo" class="col-form-label">Titulo</label>
+                            <InputText type="type" class="form-control" name="titulo" @bind-Value="@_model.Titulo" />
+                        </div>
+                        <div class="form-group">
+                            <label for="descricao" class="col-form-label">Descrição</label>
+                            <InputText type="type" class="form-control" name="descricao" @bind-Value="@_model.Descricao" />
+                        </div>
+                        <div>
+                            <label for="status" class="col-form-label">Status</label>
+                            <InputSelect class="form-control" @bind-Value="_model.Status">
+                                @foreach (var status in Enum.GetValues(typeof(Status)))
+                                {
+                                    <option value="@status">@status</option>
+                                }
+                            </InputSelect>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                        @if (result is not null)
+                        {
+                            <p>@result.Message</p>
+                        }
+                    </div>
+                </EditForm>
+            </div>
         </div>
     </div>
-</div>
+}
 
 @code {
     [Parameter]
     [EditorRequired]
     public TarefaViewModel _model { get; set; } = new();
+    public CommandResult<TarefaViewModel> result;
+    [Parameter]
+    [EditorRequired]
+    public bool Editar { get; set; }
 
     private async Task OnValidSubmitAsync()
     {
-
+        result = await TarefaServico.CreateAsync(_model);
+        if (result.Success = false)
+        {
+            result.Data = new TarefaViewModel();
+        }
+        JSRuntime.InvokeVoidAsync("$('#modal').modal('hide');");
     }
 }

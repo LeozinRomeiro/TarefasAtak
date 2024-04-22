@@ -8,10 +8,16 @@ namespace TarefasAtak.App.Servicos
 {
     public class TarefaServico(IHttpClientFactory httpClientFactory, IMapper mapper)
     {
-        public async Task CreateAsync(TarefaViewModel tarefa)
+        public async Task<CommandResult<TarefaViewModel>> CreateAsync(TarefaViewModel tarefaViewModel)
         {
             var client = httpClientFactory.CreateClient(Configuration.HttpClientName);
-            await client.PostAsJsonAsync("Tarefa", tarefa);
+            var tarefa = mapper.Map<Tarefa>(tarefaViewModel);
+            var result = await client.PostAsJsonAsync("Tarefa", tarefa);
+            if(result is null)
+            {
+                return new CommandResult<TarefaViewModel>(false, "Nenhuma resposta da API", null);
+            }
+            return await result.Content.ReadFromJsonAsync<CommandResult<TarefaViewModel>>();
         }
 
         public async Task<List<TarefaViewModel>> GetAsync()

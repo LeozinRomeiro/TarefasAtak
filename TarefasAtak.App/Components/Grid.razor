@@ -14,7 +14,7 @@ else
     <div class="container">
         <div class="row button-container">
             <div class="dashboard col">
-                <button type="button" @onclick="(e => Inserir(true))" class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModal">
+                <button type="button" @onclick="(e => Inserir(true))" class="btn btn-outline-success" data-toggle="modal" data-target="#modal">
                     <div class="button-div">
                         <svg xmlns="http://www.w3.org/2000/svg" id="btnEditar" width="32" height="32" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
@@ -67,7 +67,7 @@ else
         </div>
     </div>
     @if(exibirModal){
-        <Modal _model="@selectedTarefa"></Modal>
+        <Modal _model="@selectedTarefa" Editar="@editar"></Modal>
     }
 }
 
@@ -75,6 +75,7 @@ else
     private List<TarefaViewModel> tarefas = new();
     private TarefaViewModel selectedTarefa = new();
     private bool exibirModal = false;
+    public bool editar = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -84,13 +85,20 @@ else
     private void SelectTarefa(TarefaViewModel tarefa)
     {
         if (selectedTarefa == tarefa)
-            selectedTarefa = null;
+        {
+            selectedTarefa = new();
+            editar = false;
+        }
         else
+        {
             selectedTarefa = tarefa;
+            editar = true;
+        }
     }
 
     public void Inserir(bool exibiModal)
     {
+        selectedTarefa = new();
         exibirModal = exibiModal;
     }
 
