@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using TarefasAtak.App.Mappers;
 using TarefasAtak.App;
 using TarefasAtak.App.Servicos;
 using TarefasAtak.Core.Context.Entities;
@@ -17,6 +18,7 @@ builder.Services.AddHttpClient(
     }
     );
 
+builder.Services.AddAutoMapper(typeof(DtoToModelMappingTarefa));
 builder.Services.AddTransient<TarefaServico>();
 
 await builder.Build().RunAsync();

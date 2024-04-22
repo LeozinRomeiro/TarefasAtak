@@ -1,13 +1,12 @@
 ﻿using TarefasAtak.Core.Context.Enums;
-using TarefasAtak.Core.Context.ValueObjetcs;
 
 namespace TarefasAtak.App.Models
 {
-    public class Tarefa
+    public class TarefaViewModel
     {
         public Guid Id { get; set; } = Guid.Empty;
         public string Titulo { get; set; } = string.Empty;
-        public Descricao? Descricao { get; set; }
+        public string Descricao { get; set; } = string.Empty;
         public Status Status { get; set; } = Status.Nova;
     }
 }
