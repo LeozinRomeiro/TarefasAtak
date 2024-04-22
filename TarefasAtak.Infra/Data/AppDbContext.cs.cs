@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,6 @@ using TarefasAtak.Core.Context.Entities;
 using TarefasAtak.Core.Context.Enums;
 using TarefasAtak.Core.Context.ValueObjetcs;
 using TarefasAtak.Core.SharedContext.Entities;
-using TarefasAtak.Infra.Dtos;
 
 namespace TarefasAtak.Infra.Data
 {
