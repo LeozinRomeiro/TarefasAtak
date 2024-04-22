@@ -29,9 +29,9 @@ namespace TarefasAtak.Api.Controllers
         {
 
             var tarefas = servico.GetAll();
-            var tarefasDto = mapper.Map<List <TarefaDto>>(tarefas.ToList());
+            //var tarefasDto = mapper.Map<List <TarefaDto>>(tarefas.ToList());
 
-            return Ok(new CommandResult(true, "Resultado da busca...", tarefasDto));
+            return Ok(new CommandResult(true, "Resultado da busca...", tarefas));
         }
         [HttpGet("{id}")]
         public async Task<ActionResult> GetByIdAsync([FromRoute] Guid id)
