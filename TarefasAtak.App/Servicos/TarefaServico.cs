@@ -1,5 +1,5 @@
 ﻿using System.Net.Http.Json;
-using TarefasAtak.Core.Context.Entities;
+using TarefasAtak.App.Models;
 using TarefasAtak.App.Commands;
 
 namespace TarefasAtak.App.Servicos
