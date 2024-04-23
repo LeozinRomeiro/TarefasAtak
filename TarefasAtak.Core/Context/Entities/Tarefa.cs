@@ -18,6 +18,7 @@ namespace TarefasAtak.Core.Context.Entities
             Titulo = titulo;
             Descricao = descricao;
             Status = status;
+            NewGuid();
             TarefaInvalidaException.ThrowIfInvalid(titulo,status,descricao);
         }
 
