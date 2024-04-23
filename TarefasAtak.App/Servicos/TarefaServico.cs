@@ -29,5 +29,27 @@ namespace TarefasAtak.App.Servicos
 
             return tarefas;
         }
+
+        public async Task<CommandResult<TarefaViewModel>> UpdateAsync(TarefaViewModel tarefaViewModel)
+        {
+            var client = httpClientFactory.CreateClient(Configuration.HttpClientName);
+            var tarefa = mapper.Map<Tarefa>(tarefaViewModel);
+            var result = await client.PutAsJsonAsync($"Tarefa/{tarefa.Id}", tarefa);
+            if (result is null)
+            {
+                return new CommandResult<TarefaViewModel>(false, "Nenhuma resposta da API", null);
+            }
+            return await result.Content.ReadFromJsonAsync<CommandResult<TarefaViewModel>>();
+        }
+        public async Task<CommandResult<TarefaViewModel>> DeleteAsync(Guid id)
+        {
+            var client = httpClientFactory.CreateClient(Configuration.HttpClientName);
+            var result = await client.DeleteAsync($"Tarefa/{id}");
+            if (result is null)
+            {
+                return new CommandResult<TarefaViewModel>(false, "Nenhuma resposta da API", null);
+            }
+            return await result.Content.ReadFromJsonAsync<CommandResult<TarefaViewModel>>();
+        }
     }
 }
