@@ -59,5 +59,19 @@ namespace TarefasAtak.App.Servicos
             }
             return await result.Content.ReadFromJsonAsync<CommandResult<TarefaCommand>>();
         }
+        public async Task<CommandResult<TarefaCommand>> GetJsonAsync()
+        {
+            try
+            {
+                var client = httpClientFactory.CreateClient(Configuration.HttpClientName);
+                await client.GetAsync("Tarefa/json");
+
+                return new CommandResult<TarefaCommand>(true,"Iniciado download da base de dados JSON",null);
+            }
+            catch (Exception e)
+            {
+                return new CommandResult<TarefaCommand>(false, $"Erro para baixar o arquivo - {e.Message}", null);
+            }
+        }
     }
 }
