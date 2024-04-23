@@ -23,7 +23,29 @@ namespace TarefasAtak.Api.Controllers
             this.servico = servico;
             this.mapper = mapper;
         }
+        [HttpGet("json")]
+        public async Task<ActionResult> GetJsonAsync()
+        {
+            try
+            {
+                var filePath = "C:\\dev\\TarefasAtak\\TarefasAtak.Infra\\Data\\dataBase.json";
 
+                if (!System.IO.File.Exists(filePath))
+                {
+                    return NotFound();
+                }
+
+                var fileBytes = System.IO.File.ReadAllBytes(filePath);
+
+                HttpContext.Response.ContentType = "application/json";
+
+                return File(fileBytes, HttpContext.Response.ContentType, "dataJson.json");
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new CommandResult<Tarefa>(false, $"Falha interna! - {e.Message}", null));
+            }
+        }
         [HttpGet]
         public async Task<ActionResult> GetAllAsync()
         {
