@@ -87,18 +87,18 @@ else
             </div>
         </div>
     </div>
-    <Modal _model="@selectedTarefa" Editar="@editar" OnSubmitCallback="@UpdateTarefas"></Modal>
+    <Modal _model="@selectedTarefa" Editar="@tarefaSelecionada" OnSubmitCallback="@UpdateTarefas"></Modal>
 }
 
 @code {
     private CommandResult<List<TarefaCommand>> result;
     private List<TarefaCommand> tarefas = new();
     private TarefaCommand selectedTarefa = new();
-    public bool editar = false;
+    public bool tarefaSelecionada => tarefas.Exists(t => t.Id.Equals(selectedTarefa.Id));
     private string logMessage = "";
     private string logMessageType = "success";
     private string validarTarefa(){
-        if(tarefas.Exists(t => t.Id.Equals(selectedTarefa.Id)))
+        if (tarefaSelecionada)
         {
             return "#modal";
         }
@@ -128,12 +128,10 @@ else
         if (selectedTarefa == tarefa)
         {
             selectedTarefa = new();
-            editar = false;
         }
         else
         {
             selectedTarefa = tarefa;
-            editar = true;
         }
     }
 
@@ -170,7 +168,10 @@ else
         {
             tarefas = result.Data;
         }
-        logMessage = result.Message;
+        else
+        {
+            logMessage = result.Message;
+        }
     }
 
 }
