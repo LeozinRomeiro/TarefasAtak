@@ -14,15 +14,6 @@ namespace TarefasAtak.Core.Context.Servicos
         }
         private readonly ITarefaRepository _tarefaRepository;
 
-        //public void Add(Tarefa command)
-        //{
-        //    //Validar comando
-
-        //    var tarefa = new Tarefa(command.Titulo, command.Descricao, command.Status);
-        //    _tarefaRepository.Add(tarefa);
-        //    //return new CommandResult(true, $"A tarefa {tarefa.Titulo} foi registrada com sucesso", tarefa);
-        //}
-
         public Tarefa GetById(Guid id)
         {
             return _tarefaRepository.GetByID(id);

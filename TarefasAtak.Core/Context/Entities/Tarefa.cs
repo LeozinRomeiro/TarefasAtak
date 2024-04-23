@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using TarefasAtak.Core.Context.Enums;
+using TarefasAtak.Core.Context.Exceptions;
 using TarefasAtak.Core.Context.ValueObjetcs;
 using TarefasAtak.Core.SharedContext.Entities;
 
@@ -17,6 +18,7 @@ namespace TarefasAtak.Core.Context.Entities
             Titulo = titulo;
             Descricao = descricao;
             Status = status;
+            TarefaInvalidaException.ThrowIfInvalid(titulo,status,descricao);
         }
 
         public string Titulo { get; private set; }

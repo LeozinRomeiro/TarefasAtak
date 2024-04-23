@@ -12,7 +12,7 @@ namespace TarefasAtak.Core.Context.ValueObjetcs
         public Descricao(string texto)
         {
             Texto = texto;
-            TarefaInvalidaException.ThrowIfInvalid(texto);
+            TarefaInvalidaException.ThrowIfDescricaoInvalid(texto,200);
         }
 
         public string Texto { get; private set; }

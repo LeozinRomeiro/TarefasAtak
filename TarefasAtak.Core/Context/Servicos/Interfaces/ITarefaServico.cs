@@ -11,7 +11,6 @@ namespace TarefasAtak.Core.Context.Servicos.Interfaces
     public interface ITarefaServico : IServico<Tarefa>
     {
         Tarefa GetById(Guid id);
-
         bool DeleteById(Guid id);
         void Update(Guid id, Tarefa tarefa);
     }
