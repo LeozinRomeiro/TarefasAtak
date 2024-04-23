@@ -36,7 +36,11 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" data-dismiss="modal">Salvar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                        @if (result is not null)
+                        {
+                            <p>@result.Message</p>
+                        }
                     </div>
                 </EditForm>
             </div>
@@ -52,9 +56,6 @@
     [Parameter]
     [EditorRequired]
     public bool Editar { get; set; }
-    [Parameter]
-    [EditorRequired]
-    public EventCallback<CommandResult<TarefaViewModel>> OnSubmitCallback { get; set; }
 
     private async Task OnValidSubmitAsync()
     {
@@ -65,7 +66,7 @@
             {
                 result.Data = new TarefaViewModel();
             }
-            //JSRuntime.InvokeVoidAsync("$('#modal').modal('hide');");
+            JSRuntime.InvokeVoidAsync("$('#modal').modal('hide');");
         }
         else
         {
@@ -74,8 +75,7 @@
             {
                 result.Data = new TarefaViewModel();
             }
-            //JSRuntime.InvokeVoidAsync("$('#modal').modal('hide');");
+            JSRuntime.InvokeVoidAsync("$('#modal').modal('hide');");
         }
-        await OnSubmitCallback.InvokeAsync(result);
     }
 }
