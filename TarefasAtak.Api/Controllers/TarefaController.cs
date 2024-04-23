@@ -38,6 +38,8 @@ namespace TarefasAtak.Api.Controllers
                 var fileBytes = System.IO.File.ReadAllBytes(filePath);
 
                 HttpContext.Response.ContentType = "application/json";
+                var fileName = "dataJson.json";
+                HttpContext.Response.Headers.Add("Content-Disposition", $"attachment; filename={fileName}");
 
                 return File(fileBytes, HttpContext.Response.ContentType, "dataJson.json");
             }
