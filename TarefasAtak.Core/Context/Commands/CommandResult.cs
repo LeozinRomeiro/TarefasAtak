@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TarefasAtak.Core.Context.Commands.Interfaces;
+﻿
 
 namespace TarefasAtak.Core.Context.Commands
 {
-    public class CommandResult : ICommandResult
+    public class CommandResult<T>
     {
-        public CommandResult(bool success, string message, object data)
+        public CommandResult(bool success, string message, T? data)
         {
             Success = success;
             Message = message;
             Data = data;
         }
 
-        public bool Success { get; set; }
+        public bool Success { get; set; } = false;
         public string Message { get; set; }
-        public object Data { get; set; }
+        public T? Data { get; set; }
     }
 }

@@ -47,14 +47,14 @@
 @code {
     [Parameter]
     [EditorRequired]
-    public TarefaViewModel _model { get; set; } = new();
-    public CommandResult<TarefaViewModel> result;
+    public TarefaCommand _model { get; set; } = new();
+    public CommandResult<TarefaCommand> result;
     [Parameter]
     [EditorRequired]
     public bool Editar { get; set; }
     [Parameter]
     [EditorRequired]
-    public EventCallback<CommandResult<TarefaViewModel>> OnSubmitCallback { get; set; }
+    public EventCallback<CommandResult<TarefaCommand>> OnSubmitCallback { get; set; }
 
     private async Task OnValidSubmitAsync()
     {
@@ -63,7 +63,7 @@
             result = await TarefaServico.UpdateAsync(_model);
             if (!result.Success)
             {
-                result.Data = new TarefaViewModel();
+                result.Data = new TarefaCommand();
             }
             //JSRuntime.InvokeVoidAsync("$('#modal').modal('hide');");
         }
@@ -72,7 +72,7 @@
             result = await TarefaServico.CreateAsync(_model);
             if (!result.Success)
             {
-                result.Data = new TarefaViewModel();
+                result.Data = new TarefaCommand();
             }
             //JSRuntime.InvokeVoidAsync("$('#modal').modal('hide');");
         }

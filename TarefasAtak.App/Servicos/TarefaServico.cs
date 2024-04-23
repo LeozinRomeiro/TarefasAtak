@@ -1,6 +1,5 @@
 ﻿using System.Net.Http.Json;
-using TarefasAtak.App.Models;
-using TarefasAtak.App.Commands;
+using TarefasAtak.Core.Context.Commands;
 using TarefasAtak.Core.Context.Entities;
 using AutoMapper;
 
@@ -8,48 +7,57 @@ namespace TarefasAtak.App.Servicos
 {
     public class TarefaServico(IHttpClientFactory httpClientFactory, IMapper mapper)
     {
-        public async Task<CommandResult<TarefaViewModel>> CreateAsync(TarefaViewModel tarefaViewModel)
+        public async Task<CommandResult<TarefaCommand>> CreateAsync(TarefaCommand tarefaViewModel)
         {
-            var client = httpClientFactory.CreateClient(Configuration.HttpClientName);
-            var tarefa = mapper.Map<Tarefa>(tarefaViewModel);
-            var result = await client.PostAsJsonAsync("Tarefa", tarefa);
-            if(result is null)
+            try
             {
-                return new CommandResult<TarefaViewModel>(false, "Nenhuma resposta da API", null);
+                var client = httpClientFactory.CreateClient(Configuration.HttpClientName);
+                var tarefa = mapper.Map<Tarefa>(tarefaViewModel);
+                var result = await client.PostAsJsonAsync("Tarefa", tarefa);
+                return await result.Content.ReadFromJsonAsync<CommandResult<TarefaCommand>>();
             }
-            return await result.Content.ReadFromJsonAsync<CommandResult<TarefaViewModel>>();
+            catch (Exception e)
+            {
+                return new CommandResult<TarefaCommand>(false, $"Nenhuma resposta da API - {e.Message}", null);
+            }
+
         }
 
-        public async Task<List<TarefaViewModel>> GetAsync()
+        public async Task<CommandResult<List<TarefaCommand>>> GetAsync()
         {
-            var client = httpClientFactory.CreateClient(Configuration.HttpClientName);
-            var result = await client.GetFromJsonAsync<CommandResult<List<Tarefa>>>("Tarefa") ?? new CommandResult<List<Tarefa>>(false,"Falha no retorno da API",null);
+            try
+            {
+                var client = httpClientFactory.CreateClient(Configuration.HttpClientName);
+                var result = await client.GetFromJsonAsync<CommandResult<List<TarefaCommand>>>("Tarefa") ?? new CommandResult<List<TarefaCommand>>(false, "Falha no retorno da API", null);
 
-            var tarefas = mapper.Map<List<TarefaViewModel>>(result.Data);
-
-            return tarefas;
+                return result;
+            }
+            catch (Exception e)
+            {
+                return new CommandResult<List<TarefaCommand>>(false, $"Nenhuma resposta da API - {e.Message}", null);
+            }
         }
 
-        public async Task<CommandResult<TarefaViewModel>> UpdateAsync(TarefaViewModel tarefaViewModel)
+        public async Task<CommandResult<TarefaCommand>> UpdateAsync(TarefaCommand tarefaViewModel)
         {
             var client = httpClientFactory.CreateClient(Configuration.HttpClientName);
             var tarefa = mapper.Map<Tarefa>(tarefaViewModel);
             var result = await client.PutAsJsonAsync($"Tarefa/{tarefa.Id}", tarefa);
             if (result is null)
             {
-                return new CommandResult<TarefaViewModel>(false, "Nenhuma resposta da API", null);
+                return new CommandResult<TarefaCommand>(false, "Nenhuma resposta da API", null);
             }
-            return await result.Content.ReadFromJsonAsync<CommandResult<TarefaViewModel>>();
+            return await result.Content.ReadFromJsonAsync<CommandResult<TarefaCommand>>();
         }
-        public async Task<CommandResult<TarefaViewModel>> DeleteAsync(Guid id)
+        public async Task<CommandResult<TarefaCommand>> DeleteAsync(Guid id)
         {
             var client = httpClientFactory.CreateClient(Configuration.HttpClientName);
             var result = await client.DeleteAsync($"Tarefa/{id}");
             if (result is null)
             {
-                return new CommandResult<TarefaViewModel>(false, "Nenhuma resposta da API", null);
+                return new CommandResult<TarefaCommand>(false, "Nenhuma resposta da API", null);
             }
-            return await result.Content.ReadFromJsonAsync<CommandResult<TarefaViewModel>>();
+            return await result.Content.ReadFromJsonAsync<CommandResult<TarefaCommand>>();
         }
     }
 }

@@ -91,8 +91,9 @@ else
 }
 
 @code {
-    private List<TarefaViewModel> tarefas = new();
-    private TarefaViewModel selectedTarefa = new();
+    private CommandResult<List<TarefaCommand>> result;
+    private List<TarefaCommand> tarefas = new();
+    private TarefaCommand selectedTarefa = new();
     public bool editar = false;
     private string logMessage = "";
     private string logMessageType = "success";
@@ -104,7 +105,7 @@ else
         return string.Empty;
     }
 
-    private async Task UpdateTarefas(CommandResult<TarefaViewModel> result)
+    private async Task UpdateTarefas(CommandResult<TarefaCommand> result)
     {
         if (result.Success)
         {
@@ -122,7 +123,7 @@ else
         await AtualizarAsync();
     }
 
-    private void SelectTarefa(TarefaViewModel tarefa)
+    private void SelectTarefa(TarefaCommand tarefa)
     {
         if (selectedTarefa == tarefa)
         {
@@ -164,7 +165,12 @@ else
 
     private async Task AtualizarAsync()
     {
-        tarefas = await TarefaServico.GetAsync();
+        result = await TarefaServico.GetAsync();
+        if (result.Success)
+        {
+            tarefas = result.Data;
+        }
+        logMessage = result.Message;
     }
 
 }
