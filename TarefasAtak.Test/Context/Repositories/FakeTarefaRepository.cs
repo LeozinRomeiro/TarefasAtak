@@ -7,7 +7,7 @@ namespace TarefasAtak.Test.Context.Repositories
 {
     public class FakeTarefaRepository : ITarefaRepository
     {
-        private IList<Tarefa> tarefas = new List<Tarefa>();
+        private List<Tarefa> tarefas = new List<Tarefa>();
         public void Add(Tarefa obj)
         {
             tarefas.Add(obj);
@@ -24,7 +24,7 @@ namespace TarefasAtak.Test.Context.Repositories
             return false;
         }
 
-        public IEnumerable<Tarefa> GetAll()
+        public List<Tarefa> GetAll()
         {
             tarefas.Add(new Tarefa("Cozinhar",new Descricao("Fazer almoço as 12h"),Status.Nova));
             tarefas.Add(new Tarefa("Caminhar", new Descricao("Corrida no parque amanha"), Status.Nova));
