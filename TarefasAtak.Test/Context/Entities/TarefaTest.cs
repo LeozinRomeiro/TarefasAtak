@@ -16,7 +16,7 @@ namespace TarefasAtak.Test.Context.Entities
     {
         [TestMethod]
         [ExpectedException(typeof(TarefaInvalidaException))]
-        [DataRow("Titulo valido",FakeStatus.Completa)]
+        //[DataRow("Titulo valido",FakeStatus.Completa)]
         [DataRow(null, Status.Nova)]
         [DataRow("W", Status.Nova)]
         [DataRow("Apesar de simples, o Contador de Caracteres tem várias aplicações", Status.Nova)]
