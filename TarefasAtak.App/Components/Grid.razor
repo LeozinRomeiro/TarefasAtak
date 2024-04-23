@@ -1,5 +1,6 @@
 ﻿@inject HttpClient Http
 @inject TarefaServico TarefaServico
+@inject NavigationManager NavigationManager
 
 <PageTitle>Tarefas</PageTitle>
 <img src="/atak.png" alt="">
@@ -185,8 +186,7 @@ else
     }
     private async Task BaixarJsonAsync()
     {
-        var result = await TarefaServico.GetJsonAsync();
-        logMessage = result.Message;
+        NavigationManager.NavigateTo("http://localhost:5260/Tarefa/json", forceLoad: true);
     }
 
 }
