@@ -10,9 +10,11 @@ public class DescrisaoTest
 {
     [TestMethod]
     [ExpectedException(typeof(TarefaInvalidaException))]
-    public void DadoUmaDescrisaoVaziaDeveRetornarExcecao()
+    [DataRow(null)]
+    [DataRow("")]
+    [DataRow("aperfeiçoou minhas habilidades em C# com web em principal usando ASP.NET, Blazor e Razor Pages, mas já desenvolvi com Windows Forms e Xamarin. Resultando em pratica com Java Script, CSS e HTML básico e total fundamentos de SQL Server(Conhecimento em T-SQL)")]
+    public void DadoUmaDescrisaoInvalidaDeveRetornarExcecao(string texto)
     {
-        var descrisao = new Descricao("");
-        var tarefa = new Tarefa("Tarefa invalida", descrisao, Status.Nova);
+        new Tarefa("Tarefa invalida", new Descricao(texto), Status.Nova);
     }
 }
