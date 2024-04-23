@@ -8,20 +8,20 @@ using TarefasAtak.Core.Context.ValueObjetcs;
 
 namespace TarefasAtak.Core.Context.Exceptions
 {
-    public class TarefaInvalidaException : Exception
+    public class TarefaCommandInvalidaException : Exception
     {
         private const string MessagemPadrao = "Tarefa invalida";
 
-        public TarefaInvalidaException(string message = MessagemPadrao)
+        public TarefaCommandInvalidaException(string message = MessagemPadrao)
             : base(message)
         {
         }
 
-        public static void ThrowIfInvalid(string titulo, Status status, Descricao descricao ,string mensagem = MessagemPadrao)
+        public static void ThrowIfInvalid(string titulo, Status status, string descricao, string mensagem = MessagemPadrao)
         {
-            ThrowIfDescricaoInvalid(descricao.Texto, 200);
+            ThrowIfDescricaoInvalid(descricao, 200);
             ThrowIfTituloTamanhoInvalido(titulo, 2, 50);
-            //ThrowIfStatusInvalido(status);
+            ThrowIfStatusInvalido(status);
         }
         public static void ThrowIfDescricaoInvalid(string texto, int tamanhoMaximo, string mensagem = MessagemPadrao)
         {
@@ -37,12 +37,12 @@ namespace TarefasAtak.Core.Context.Exceptions
             }
         }
 
-        //public static void ThrowIfStatusInvalido(Status status)
-        //{
-        //    if (!Enum.IsDefined(typeof(Status), status))
-        //    {
-        //        throw new TarefaInvalidaException($"Status inválido: {status}");
-        //    }
-        //}
+        public static void ThrowIfStatusInvalido(Status status)
+        {
+            if (!Enum.IsDefined(typeof(Status), status))
+            {
+                throw new TarefaInvalidaException($"Status inválido: {status}");
+            }
+        }
     }
 }
