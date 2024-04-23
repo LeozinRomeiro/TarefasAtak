@@ -14,7 +14,7 @@ else
     <div class="container">
         <div class="row">
             <div class="col">
-                @if (!string.IsNullOrWhiteSpace(logMessage))
+                @if (!string.IsNullOrEmpty(logMessage))
                 {
                     <div class="alert alert-@logMessageType" role="alert">
                         @logMessage
@@ -41,7 +41,7 @@ else
                         Editar
                     </div>
                 </button>
-                <button type="button" @onclick="(e => Excluir(true,false))" class="btn btn-outline-danger" data-toggle="modal" data-target="#confirmDeleteModal">
+                <button type="button" @onclick="(e => Excluir(false))" class="btn btn-outline-danger" data-toggle="modal" data-target="#confirmDeleteModal">
                     <div class="button-div">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
@@ -82,28 +82,8 @@ else
                         }
                     </tbody>
                 </table>
-                @if (exibirModalConfirmacao)
-                {
-                    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Exclusão</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Tem certeza de que deseja excluir esta tarefa?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal" @onclick="(e => Excluir(false,true))">Confirmar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
+
+                <ModalConfirm Confirme="@ExcluirConfirm"></ModalConfirm>
             </div>
         </div>
     </div>
@@ -116,7 +96,6 @@ else
     private List<TarefaViewModel> tarefas = new();
     private TarefaViewModel selectedTarefa = new();
     private bool exibirModal = false;
-    private bool exibirModalConfirmacao = false;
     public bool editar = false;
     private string logMessage = "";
     private string logMessageType = "success";
@@ -131,6 +110,10 @@ else
         }
     }
 
+    private async Task ExcluirConfirm(bool confirm)
+    {
+        await Excluir(confirm);
+    }
     protected override async Task OnInitializedAsync()
     {
         await AtualizarAsync();
@@ -161,16 +144,15 @@ else
         exibirModal = exibiModal;
     }
 
-    public async void Excluir(bool exibiModal, bool confirmado)
+    public async Task Excluir(bool confirmado)
     {
         if (selectedTarefa != null && selectedTarefa.Id != Guid.Empty)
         {
-            exibirModalConfirmacao = exibiModal;
             if (confirmado)
             {
-                await TarefaServico.DeleteAsync(selectedTarefa.Id);
+                var result = await TarefaServico.DeleteAsync(selectedTarefa.Id);
+                logMessage = result.Message;
                 await AtualizarAsync();
-                exibirModalConfirmacao = exibiModal;
             }
         }
     }
