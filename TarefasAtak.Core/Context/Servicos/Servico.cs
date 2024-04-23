@@ -29,7 +29,7 @@ namespace TarefasAtak.Core.Context.Servicos
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> GetAll()
+        public List<T> GetAll()
         {
             return _repository.GetAll();
         }

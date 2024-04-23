@@ -25,7 +25,7 @@ namespace TarefasAtak.Infra.Context.Repositories
             _context.Add(obj);
         }
 
-        public IEnumerable<T> GetAll()
+        public List<T> GetAll()
         {
             var entities = _context.GetAll();
             return entities;
