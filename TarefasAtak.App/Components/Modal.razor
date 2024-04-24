@@ -37,10 +37,10 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="@CancelarSubmitAsync">Cancelar</button>
                         @if (!formularioValidado)
                         {
-                            <button type="submit" class="btn btn-primary">Validar</button>
+                            <button type="submit" class="btn btn-primary" @onclick="@SalvarSubmitAsync">Validar</button>
                         }
                         else
                         {
@@ -66,6 +66,10 @@
     [EditorRequired]
     public EventCallback<CommandResult<TarefaCommand>> OnSubmitCallback { get; set; }
     public bool formularioValidado = false;
+    private async Task CancelarSubmitAsync()
+    {
+        await OnSubmitCallback.InvokeAsync(new CommandResult<TarefaCommand>(false, "Operação cancelada", null));
+    }
     private async Task SalvarSubmitAsync()
     {
         if (Editar)

@@ -131,11 +131,8 @@ else
 
     private async Task UpdateTarefas(CommandResult<TarefaCommand> result)
     {
-        if (result.Success)
-        {
-            await AtualizarAsync();
-            logMessage = result.Message;
-        }
+        logMessage = result.Message;
+        await AtualizarAsync();
     }
 
     private List<TarefaCommand> FiltrarTarefas(List<TarefaCommand> tarefasBase)
