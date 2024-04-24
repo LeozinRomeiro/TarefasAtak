@@ -16,8 +16,10 @@ namespace TarefasAtak.Core.Context.Commands
 
         public Guid Id { get; set; } = Guid.Empty;
         [Required(ErrorMessage = "Campo obrigatorio")]
+        [StringLength(20, MinimumLength = 3, ErrorMessage = "O titulo deve ter no mínimo 3 caracteres.")]
         public string Titulo { get; set; } = string.Empty;
         [Required(ErrorMessage = "Campo obrigatorio")]
+        [StringLength(100, MinimumLength = 10, ErrorMessage = "A Descrição deve ter no mínimo 10 caracteres.")]
         public string Descricao { get; set; } = string.Empty;
         [Required(ErrorMessage = "Campo obrigatorio")]
         public Status Status { get; set; } = Status.Nova;

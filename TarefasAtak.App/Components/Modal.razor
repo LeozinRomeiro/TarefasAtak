@@ -14,16 +14,17 @@
                     </button>
                 </div>
                 <EditForm Model="@_model" OnValidSubmit="@OnValidSubmitAsync">
-                    <ValidationSummary></ValidationSummary>
                     <DataAnnotationsValidator></DataAnnotationsValidator>
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="titulo" class="col-form-label">Titulo</label>
                             <InputText type="type" class="form-control" name="titulo" @bind-Value="@_model.Titulo" />
+                            <ValidationMessage For="@(() => _model.Titulo)" />
                         </div>
                         <div class="form-group">
                             <label for="descricao" class="col-form-label">Descrição</label>
                             <InputText type="type" class="form-control" name="descricao" @bind-Value="@_model.Descricao" />
+                            <ValidationMessage For="@(() => _model.Descricao)" />
                         </div>
                         <div>
                             <label for="status" class="col-form-label">Status</label>
@@ -37,7 +38,14 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" data-dismiss="modal" @onclick="@OnValidSubmitAsync">Salvar</button>
+                        @if (!formularioValidado)
+                        {
+                            <button type="submit" class="btn btn-primary">Validar</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-info" data-dismiss="modal" @onclick="@SalvarSubmitAsync">Salvar</button>
+                        }
                     </div>
                 </EditForm>
             </div>
@@ -49,6 +57,7 @@
     [Parameter]
     [EditorRequired]
     public TarefaCommand _model { get; set; } = new();
+    public TarefaCommand modelValidado { get; set; } = new();
     public CommandResult<TarefaCommand> result;
     [Parameter]
     [EditorRequired]
@@ -56,28 +65,32 @@
     [Parameter]
     [EditorRequired]
     public EventCallback<CommandResult<TarefaCommand>> OnSubmitCallback { get; set; }
-
-    private async Task OnValidSubmitAsync()
+    public bool formularioValidado = false;
+    private async Task SalvarSubmitAsync()
     {
         if (Editar)
         {
-            result = await TarefaServico.UpdateAsync(_model);
+            result = await TarefaServico.UpdateAsync(modelValidado);
             if (!result.Success)
             {
                 result.Data = new TarefaCommand();
             }
-            //JSRuntime.InvokeVoidAsync("$('#modal').modal('hide');");
         }
         else
         {
-            result = await TarefaServico.CreateAsync(_model);
+            result = await TarefaServico.CreateAsync(modelValidado);
             if (!result.Success)
             {
                 result.Data = new TarefaCommand();
             }
-            //JSRuntime.InvokeVoidAsync("$('#modal').modal('hide');");
         }
         await OnSubmitCallback.InvokeAsync(result);
         _model = new();
+        formularioValidado = false;
+    }
+    private async Task OnValidSubmitAsync()
+    {
+        formularioValidado = true;
+        modelValidado = _model;
     }
 }
