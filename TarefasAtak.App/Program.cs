@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.JSInterop;
 using TarefasAtak.App;
 using TarefasAtak.App.Mappers;
 using TarefasAtak.App.Servicos;

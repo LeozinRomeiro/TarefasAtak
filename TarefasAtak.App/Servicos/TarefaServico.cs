@@ -63,7 +63,7 @@ namespace TarefasAtak.App.Servicos
         {
             try
             {
-                var client = httpClientFactory.CreateClient(Configuration.HttpClientName);
+            var client = httpClientFactory.CreateClient(Configuration.HttpClientName);
                 await client.GetAsync("Tarefa/json");
 
                 return new CommandResult<TarefaCommand>(true,"Iniciado download da base de dados JSON",null);
