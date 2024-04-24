@@ -102,7 +102,7 @@ namespace TarefasAtak.Api.Controllers
             try
             {
                 var tarefa = mapper.Map<Tarefa>(tarefaDto);
-                servico.Update(id, tarefa);
+                 servico.Update(id, tarefa);
                 return Ok(new CommandResult<Tarefa>(true, $"A tarefa {tarefa.Titulo} foi atualizada com sucesso", null));
             }
             catch

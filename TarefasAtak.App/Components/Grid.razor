@@ -4,9 +4,6 @@
 
 <PageTitle>Tarefas</PageTitle>
 <img src="/atak.png" alt="">
-<div>
-    <h1 style="white">Tarefas</h1>
-</div>
 
 @if (tarefas == null)
 {
@@ -59,7 +56,7 @@ else
                             <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z" />
                             <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466" />
                         </svg>
-                        Atualizar
+                        Buscar
                     </div>
                 </button>
                 <button type="button" @onclick="(e => BaixarJsonAsync())" class="btn btn-info">
@@ -70,14 +67,19 @@ else
                         Baixar JSON/DataBase
                     </div>
                 </button>
-                <div>
-                    <label for="status" class="col-form-label">Status</label>
+                <div class="col-md-2 position-absolute top-0 end-0">
+                    <label for="status" class="col-form-label text-white">Ordenar por</label>
                     <InputSelect class="form-control" @bind-Value="ordenador">
                         @foreach (var ordenador in Enum.GetValues(typeof(Ordenador)))
                         {
                             <option value="@ordenador">@ordenador</option>
                         }
                     </InputSelect>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 mt-5">
+                <div class="col">
+                    <input class="col-md-12" type="text" @bind="@termoBusca" placeholder="Digite o termo de busca">
                 </div>
             </div>
         </div>
@@ -117,6 +119,7 @@ else
     public bool tarefaSelecionada => tarefas.Exists(t => t.Id.Equals(selectedTarefa.Id));
     private string logMessage = "";
     private string logMessageType = "success";
+    private string termoBusca = "";
     private Ordenador ordenador;
     private string validarTarefa(){
         if (tarefaSelecionada)
@@ -133,6 +136,17 @@ else
             await AtualizarAsync();
             logMessage = result.Message;
         }
+    }
+
+    private List<TarefaCommand> FiltrarTarefas(List<TarefaCommand> tarefasBase)
+    {
+        if (!string.IsNullOrEmpty(termoBusca))
+        {
+            var tarefasFiltradas = tarefasBase.Where(t => t.Titulo.Contains(termoBusca, StringComparison.OrdinalIgnoreCase) ||
+                                                   t.Descricao.Contains(termoBusca, StringComparison.OrdinalIgnoreCase)).ToList();
+            return tarefasFiltradas;
+        }
+        return tarefasBase;
     }
 
     private async Task ExcluirConfirm(bool confirm)
@@ -187,27 +201,30 @@ else
         result = await TarefaServico.GetAsync();
         if (result.Success)
         {
-            tarefas = result.Data;
+            var tarefasResult = FiltrarTarefas(result.Data??new List<TarefaCommand>());
+            
             switch (ordenador)
             {
                 case Ordenador.Titulo:
-                    tarefas = result.Data.OrderBy(t => t.Titulo).ToList();
+                    tarefas = tarefasResult.OrderBy(t => t.Titulo).ToList();
                     break;
                 case Ordenador.Descricao:
-                    tarefas = result.Data.OrderBy(t => t.Descricao).ToList();
+                    tarefas = tarefasResult.OrderBy(t => t.Descricao).ToList();
                     break;
                 case Ordenador.Status:
-                    tarefas = result.Data.OrderBy(t => t.Status).ToList();
+                    tarefas = tarefasResult.OrderBy(t => t.Status).ToList();
+                    break;
+                default:
+                    tarefas = tarefasResult;
                     break;
             }
-
         }
         else
         {
             logMessage = result.Message;
         }
     }
-    private async Task BaixarJsonAsync()
+    private void BaixarJsonAsync()
     {
         NavigationManager.NavigateTo("http://localhost:5260/Tarefa/json", forceLoad: true);
     }
