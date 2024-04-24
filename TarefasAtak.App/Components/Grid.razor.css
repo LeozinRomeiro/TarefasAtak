@@ -1,5 +1,5 @@
 ﻿body {
-    background-color: #f8f9fa; /* Cor de fundo */
+    background-color: #f8f9fa;
 }
 
 .container {
@@ -35,12 +35,12 @@
 }
 
 .task-grid th {
-    background-color: #343a40; /* Cor de fundo do cabeçalho */
-    color: #ffffff; /* Cor do texto do cabeçalho */
+    background-color: #343a40;
+    color: #ffffff; 
 }
 
 .task-grid td:last-child {
-    width: 150px; /* Ajuste para a coluna de botões */
+    width: 150px;
 }
 
 .button-container {
