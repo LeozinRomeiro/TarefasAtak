@@ -32,7 +32,7 @@ else
                         Inserir
                     </div>
                 </button>
-                <button type="button" @onclick="(e => Editar())" class="btn btn-outline-primary" data-toggle="modal" data-target="@validarTarefa()">
+                <button type="button" @onclick="(e => Editar())" class="btn btn-outline-primary" data-toggle="modal" data-target="@validarNecessidadeModal("#modal")">
                     <div class="button-div">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
@@ -41,7 +41,7 @@ else
                         Editar
                     </div>
                 </button>
-                <button type="button" @onclick="(e => Excluir(false))" class="btn btn-outline-danger" data-toggle="modal" data-target="#confirmDeleteModal">
+                <button type="button" @onclick="(e => Excluir(false))" class="btn btn-outline-danger" data-toggle="modal" data-target="@validarNecessidadeModal("#confirmDeleteModal")">
                     <div class="button-div">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
@@ -72,7 +72,7 @@ else
                     <InputSelect class="form-control" @bind-Value="ordenador">
                         @foreach (var ordenador in Enum.GetValues(typeof(Ordenador)))
                         {
-                            <option value="@ordenador">@ordenador</option>
+                            <option value="@ordenador" @onclick="() => AlterarOrdenador()">@ordenador</option>
                         }
                     </InputSelect>
                 </div>
@@ -121,10 +121,10 @@ else
     private string logMessageType = "success";
     private string termoBusca = "";
     private Ordenador ordenador;
-    private string validarTarefa(){
+    private string validarNecessidadeModal(string nameModal){
         if (tarefaSelecionada)
         {
-            return "#modal";
+            return nameModal;
         }
         return string.Empty;
     }
@@ -177,7 +177,7 @@ else
 
     public void Editar()
     {
-        if (validarTarefa()==string.Empty)
+        if (validarNecessidadeModal("#modal") == string.Empty)
         {
             logMessage = "Selecione uma tarefa para edita-la";
         }
@@ -185,7 +185,7 @@ else
 
     public async Task Excluir(bool confirmado)
     {
-        if (selectedTarefa != null && selectedTarefa.Id != Guid.Empty)
+        if (selectedTarefa.Id != Guid.Empty)
         {
             if (confirmado)
             {
@@ -194,6 +194,15 @@ else
                 await AtualizarAsync();
             }
         }
+        else
+        {
+            logMessage = "Selecione uma tarefa para excluir";
+        }
+    }
+
+    public async Task AlterarOrdenador()
+    {
+        await AtualizarAsync();
     }
 
     private async Task AtualizarAsync()

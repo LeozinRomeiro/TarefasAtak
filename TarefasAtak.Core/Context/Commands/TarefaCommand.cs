@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,8 +15,11 @@ namespace TarefasAtak.Core.Context.Commands
     {
 
         public Guid Id { get; set; } = Guid.Empty;
+        [Required(ErrorMessage = "Campo obrigatorio")]
         public string Titulo { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Campo obrigatorio")]
         public string Descricao { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Campo obrigatorio")]
         public Status Status { get; set; } = Status.Nova;
 
         public void Validar()
