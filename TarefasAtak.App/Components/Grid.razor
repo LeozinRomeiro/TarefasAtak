@@ -70,6 +70,15 @@ else
                         Baixar JSON/DataBase
                     </div>
                 </button>
+                <div>
+                    <label for="status" class="col-form-label">Status</label>
+                    <InputSelect class="form-control" @bind-Value="ordenador">
+                        @foreach (var ordenador in Enum.GetValues(typeof(Ordenador)))
+                        {
+                            <option value="@ordenador">@ordenador</option>
+                        }
+                    </InputSelect>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -108,6 +117,7 @@ else
     public bool tarefaSelecionada => tarefas.Exists(t => t.Id.Equals(selectedTarefa.Id));
     private string logMessage = "";
     private string logMessageType = "success";
+    private Ordenador ordenador;
     private string validarTarefa(){
         if (tarefaSelecionada)
         {
@@ -178,6 +188,19 @@ else
         if (result.Success)
         {
             tarefas = result.Data;
+            switch (ordenador)
+            {
+                case Ordenador.Titulo:
+                    tarefas = result.Data.OrderBy(t => t.Titulo).ToList();
+                    break;
+                case Ordenador.Descricao:
+                    tarefas = result.Data.OrderBy(t => t.Descricao).ToList();
+                    break;
+                case Ordenador.Status:
+                    tarefas = result.Data.OrderBy(t => t.Status).ToList();
+                    break;
+            }
+
         }
         else
         {
