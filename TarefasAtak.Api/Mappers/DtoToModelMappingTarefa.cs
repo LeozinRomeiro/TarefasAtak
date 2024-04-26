@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using TarefasAtak.Api.Dtos;
 using TarefasAtak.Core.Context.Entities;
+using TarefasAtak.Core.Context.Commands;
 
 namespace TarefasAtak.Api.Mappers
 {
@@ -13,10 +13,10 @@ namespace TarefasAtak.Api.Mappers
 
         private void TarefaMap()
         {
-            CreateMap<TarefaDto, Tarefa>()
-                .ForMember(e=>e.Id, d=>d.Ignore())
+            CreateMap<TarefaCommand, Tarefa>()
+                .ForMember(e=>e.Id, d=>d.MapFrom(x=>x.Id))
                 .ForMember(e => e.Titulo, d => d.MapFrom(x => x.Titulo))
-                .ForMember(e => e.Descricao, d => d.MapFrom(x => x.Descricao))
+                .ForPath(dest => dest.Descricao.Texto, opt => opt.MapFrom(src => src.Descricao))
                 .ForMember(e => e.Status, d => d.MapFrom(x => x.Status));
         }
     }

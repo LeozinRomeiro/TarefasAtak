@@ -2,7 +2,7 @@
 using TarefasAtak.Core.Context.Commands;
 using TarefasAtak.Core.Context.Entities;
 
-namespace TarefasAtak.App.Mappers
+namespace TarefasAtak.Api.Mappers
 {
     public class DtoToModelMappingTarefaCommand : Profile
     {

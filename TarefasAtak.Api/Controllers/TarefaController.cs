@@ -74,16 +74,24 @@ namespace TarefasAtak.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostAsync([FromBody] TarefaDto tarefaDto)
+        public async Task<ActionResult> PostAsync([FromBody] TarefaCommand tarefaDto)
         {
-            if (tarefaDto is null)
-                return NotFound();
+            try
+            {
+                if (tarefaDto is null)
+                    return NotFound();
 
-            var tarefa = mapper.Map<Tarefa>(tarefaDto);
+                var tarefa = mapper.Map<Tarefa>(tarefaDto);
 
-            servico.Add(tarefa);
+                servico.Add(tarefa);
 
-            return Ok(new CommandResult<Tarefa>(true, $"A tarefa {tarefa.Titulo} foi registrada com sucesso", null));
+                return Ok(new CommandResult<Tarefa>(true, $"A tarefa {tarefa.Titulo} foi registrada com sucesso", null));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new CommandResult<Tarefa>(false, $"Falha interna! - {e.Message}", null));
+            }
+
         }
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteByIdAsync([FromRoute] Guid id)
@@ -97,7 +105,7 @@ namespace TarefasAtak.Api.Controllers
             return StatusCode(500,new CommandResult<Tarefa>(false, $"Erro na exclusão da tarefa {tarefa.Titulo}", null));
         }
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutAsync([FromRoute] Guid id, [FromBody] TarefaDto tarefaDto)
+        public async Task<ActionResult> PutAsync([FromRoute] Guid id, [FromBody] TarefaCommand tarefaDto)
         {
             try
             {

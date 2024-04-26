@@ -12,8 +12,7 @@ namespace TarefasAtak.App.Servicos
             try
             {
                 var client = httpClientFactory.CreateClient(Configuration.HttpClientName);
-                var tarefa = mapper.Map<Tarefa>(tarefaViewModel);
-                var result = await client.PostAsJsonAsync("Tarefa", tarefa);
+                var result = await client.PostAsJsonAsync("Tarefa", tarefaViewModel);
                 return await result.Content.ReadFromJsonAsync<CommandResult<TarefaCommand>>();
             }
             catch (Exception e)
@@ -41,8 +40,7 @@ namespace TarefasAtak.App.Servicos
         public async Task<CommandResult<TarefaCommand>> UpdateAsync(TarefaCommand tarefaViewModel)
         {
             var client = httpClientFactory.CreateClient(Configuration.HttpClientName);
-            var tarefa = mapper.Map<Tarefa>(tarefaViewModel);
-            var result = await client.PutAsJsonAsync($"Tarefa/{tarefa.Id}", tarefa);
+            var result = await client.PutAsJsonAsync($"Tarefa/{tarefaViewModel.Id}", tarefaViewModel);
             if (result is null)
             {
                 return new CommandResult<TarefaCommand>(false, "Nenhuma resposta da API", null);

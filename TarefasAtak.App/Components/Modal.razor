@@ -1,6 +1,5 @@
 ﻿@inject HttpClient Http
 @inject TarefaServico TarefaServico
-@inject IJSRuntime JSRuntime
 
 @if (_model is not null)
 {
@@ -40,7 +39,7 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="@CancelarSubmitAsync">Cancelar</button>
                         @if (!formularioValidado)
                         {
-                            <button type="submit" class="btn btn-primary" @onclick="@SalvarSubmitAsync">Validar</button>
+                                    <button type="submit" class="btn btn-primary">Validar</button>
                         }
                         else
                         {
