@@ -16,6 +16,7 @@ namespace TarefasAtak.Api.Extensions
             builder.Services.AddScoped<ITarefaRepository, TarefaRepository>();
             builder.Services.AddScoped<ITarefaServico, TarefaServico>();
             builder.Services.AddAutoMapper(typeof(DtoToModelMappingTarefa));
+            builder.Services.AddAutoMapper(typeof(DtoToModelMappingTarefaCommand));
 
         }
         public static void AddConfiguration(this WebApplicationBuilder builder)

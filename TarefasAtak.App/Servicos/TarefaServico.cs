@@ -5,7 +5,7 @@ using AutoMapper;
 
 namespace TarefasAtak.App.Servicos
 {
-    public class TarefaServico(IHttpClientFactory httpClientFactory, IMapper mapper)
+    public class TarefaServico(IHttpClientFactory httpClientFactory)
     {
         public async Task<CommandResult<TarefaCommand>> CreateAsync(TarefaCommand tarefaViewModel)
         {
